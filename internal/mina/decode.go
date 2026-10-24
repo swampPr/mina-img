@@ -19,11 +19,12 @@ func Decode(src io.Reader) (image.Image, error) {
 		return nil, err
 	}
 
-	mapLength := ((width / 2) + 1) * height
+	mapLength := ((width + 1) / 2) * height
 	pixMap := make([]byte, mapLength)
 
 	_, err = io.ReadFull(reader, pixMap)
 	if err != nil {
+		log.Println(mapLength, pixMap)
 		return nil, err
 	}
 

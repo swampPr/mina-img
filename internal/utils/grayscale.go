@@ -5,9 +5,9 @@ import (
 	"image/color"
 )
 
-func Grayscale(i image.Image) *image.RGBA {
+func Grayscale(i image.Image) *image.Gray {
 	bounds := i.Bounds()
-	dst := image.NewRGBA(bounds)
+	dst := image.NewGray(bounds)
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {

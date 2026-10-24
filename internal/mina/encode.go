@@ -32,23 +32,28 @@ func Encode(w io.Writer, i image.Image) error {
 
 func createImage(i image.Image) *MinaImg {
 	bounds := i.Bounds()
-	mapLength := (i.Bounds().Dx() / 2) * i.Bounds().Dy()
-	pixMap := make([]byte, 0, mapLength)
 
 	width := i.Bounds().Dx()
 	height := i.Bounds().Dy()
 
+	mapLength := ((width + 1) / 2) * height
+	pixMap := make([]byte, 0, mapLength)
+
 	metadata := fmt.Sprintf("MIN-V1.1\n%d\n%d\r\n\r\n", width, height)
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		for x := bounds.Min.X; x < bounds.Max.X-1; x++ {
+		for x := bounds.Min.X; x < bounds.Max.X; x += 2 {
+			if x+1 >= bounds.Max.X {
+				break
+			}
+
 			gray1, _, _, _ := i.At(x, y).RGBA()
 			gray2, _, _, _ := i.At(x+1, y).RGBA()
 
 			converted1 := math.Round(float64((gray1 / 255.0) * 10.0))
 			converted2 := math.Round(float64((gray2 / 255.0) * 10.0))
 
-			packed := (byte(converted1) << 4) | (byte(converted2) & 15)
+			packed := (byte(converted1) << 4) | (byte(converted2) & 0x0F)
 
 			pixMap = append(pixMap, packed)
 

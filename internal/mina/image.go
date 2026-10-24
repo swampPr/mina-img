@@ -7,10 +7,12 @@ import (
 )
 
 type MinaImg struct {
-	PixMap   []byte
-	PixSize  int
-	Height   int
-	Width    int
+	PixMap  []byte
+	PixSize int
+	Height  int
+	Width   int
+	// TODO: do the version thingy in Encoding
+	Version  string
 	Metadata string
 }
 

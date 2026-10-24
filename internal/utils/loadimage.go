@@ -10,7 +10,6 @@ import (
 	_ "golang.org/x/image/bmp"
 )
 
-// TODO: finish
 func LoadImage(path string) (image.Image, error) {
 	_, err := os.Stat(path)
 	if err != nil {
@@ -21,6 +20,10 @@ func LoadImage(path string) (image.Image, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	defer func() {
+		_ = f.Close()
+	}()
 
 	src, _, err := image.Decode(f)
 	if err != nil {
