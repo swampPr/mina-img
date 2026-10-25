@@ -1,6 +1,3 @@
-/*
-Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
@@ -13,9 +10,10 @@ import (
 
 // convertCmd represents the convert command
 var convertCmd = &cobra.Command{
-	Use:   "convert",
-	Short: "A brief description of your command",
-	RunE:  execConvert,
+	Use:     "convert",
+	Short:   "Convert a MINA image file to BMP, WEBP, PNG or JPEG",
+	Example: "mina-img convert /path/to/source.mina /path/to/out.bmp",
+	RunE:    execConvert,
 }
 
 func execConvert(cmd *cobra.Command, args []string) error {

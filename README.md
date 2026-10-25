@@ -2,10 +2,8 @@
 
 
 ## A simple image format that turns images into pixelated grayscale.
-**This format isn't meant to be a replacement to BMP, PNG, and JPEG. I don't even know if it's practical for any real use, I just made this as a learning experience.
+**This format isn't meant to be a replacement to BMP, PNG, WEBP or JPEG. I don't even know if it's practical for any real use, I just made this as a learning experience.
 I will probably keep improving this and maintaining it. I have ideas on what to do next**
-
-**Note: Conversion to and from WebP not supported yet**
 
 ## Example
 ![example image](./example/example_comparison.png)
@@ -24,5 +22,5 @@ I will probably keep improving this and maintaining it. I have ideas on what to 
 ### Basic Usage
 - Encode an image to .mina:
     -`mina-img encode /path/to/source.bmp /path/to/out.mina`
-- Convert .mina to BMP, PNG or JPEG:
+- Convert .mina to BMP, PNG, WEBP or JPEG:
     -`mina-img convert /path/to/source.mina /path/to/out.bmp`

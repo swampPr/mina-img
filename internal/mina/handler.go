@@ -9,6 +9,8 @@ import (
 
 	"golang.org/x/image/bmp"
 
+	"github.com/deepteams/webp"
+
 	"github.com/swampPr/mina-img/internal/utils"
 )
 
@@ -101,6 +103,11 @@ func handleConvertion(o *Opts) error {
 		}
 	case "bmp":
 		err = bmp.Encode(newFile, sourceImg)
+		if err != nil {
+			return err
+		}
+	case "webp":
+		err = webp.Encode(newFile, sourceImg, nil)
 		if err != nil {
 			return err
 		}

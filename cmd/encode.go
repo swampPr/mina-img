@@ -10,9 +10,10 @@ import (
 
 // encodeCmd represents the encode command
 var encodeCmd = &cobra.Command{
-	Use:   "encode",
-	Short: "Encode an image (BMP, WEBP, JPEG, PNG) into MINA",
-	RunE:  execEncode,
+	Use:     "encode",
+	Short:   "Encode an image (BMP, WEBP, JPEG, PNG) into MINA",
+	Example: "mina-img encode /path/to/source.bmp /path/to/out.mina",
+	RunE:    execEncode,
 }
 
 func execEncode(_ *cobra.Command, args []string) error {
