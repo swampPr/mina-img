@@ -2,10 +2,7 @@
 package cmd
 
 import (
-	"errors"
-	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/spf13/cobra"
 )
@@ -14,27 +11,11 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "mina-img",
 	Short: "A very barebones image format focused on tiny file sizes",
-	RunE:  execRoot,
+	Run:   execRoot,
 }
 
-func execRoot(cmd *cobra.Command, args []string) error {
-	if len(args) < 2 {
-		return errors.New("you must provide the path of the source image and the output path of the destination image")
-	}
-
-	inPath, err := filepath.Abs(args[0])
-	if err != nil {
-		return err
-	}
-
-	outPath, err := filepath.Abs(args[1])
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(inPath, outPath)
-
-	return nil
+func execRoot(cmd *cobra.Command, _ []string) {
+	_ = cmd.Help()
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
