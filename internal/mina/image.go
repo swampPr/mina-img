@@ -1,3 +1,4 @@
+// Package mina provides mina  ->  NOTE: encoder, decoder, converter, handler and the signature declaration of a MINA img
 package mina
 
 import (
@@ -6,12 +7,17 @@ import (
 	"math"
 )
 
-type MinaImg struct {
-	PixMap  []byte
-	PixSize int
-	Height  int
+type MinaHeaders struct {
+	Version string
 	Width   int
-	// TODO: do the version thingy in Encoding
+	Height  int
+}
+
+type MinaImg struct {
+	PixMap   []byte
+	PixSize  int
+	Height   int
+	Width    int
 	Version  string
 	Metadata string
 }

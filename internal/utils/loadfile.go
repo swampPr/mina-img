@@ -1,3 +1,4 @@
+// Package utils provides utils  ->  important utility functions when encoding, and converting images
 package utils
 
 import (

@@ -2,6 +2,7 @@
 package cmd
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -11,11 +12,12 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "mina-img",
 	Short: "A very barebones image format focused on tiny file sizes",
-	Run:   execRoot,
+	RunE:  execRoot,
 }
 
-func execRoot(cmd *cobra.Command, _ []string) {
+func execRoot(cmd *cobra.Command, _ []string) error {
 	_ = cmd.Help()
+	return errors.New("you must select a subcommand. view subcommands with 'mina-img --help'")
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

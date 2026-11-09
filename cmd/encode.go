@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -18,12 +19,12 @@ var encodeCmd = &cobra.Command{
 
 func execEncode(_ *cobra.Command, args []string) error {
 	if len(args) < 2 {
-		return errors.New("you must provide a valid source path and outpath")
+		return errors.New("you must provide a valid source path and destination path")
 	}
 
 	opts := &mina.Opts{
-		InPath:  args[0],
-		OutPath: args[1],
+		InPath:  strings.TrimSpace(args[0]),
+		OutPath: strings.TrimSpace(args[1]),
 		Op:      mina.EncodeOp,
 	}
 
@@ -32,14 +33,4 @@ func execEncode(_ *cobra.Command, args []string) error {
 
 func init() {
 	rootCmd.AddCommand(encodeCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// encodeCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// encodeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

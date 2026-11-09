@@ -2,14 +2,8 @@ package mina
 
 import (
 	"errors"
-	"image/jpeg"
-	"image/png"
 	"os"
 	"strings"
-
-	"golang.org/x/image/bmp"
-
-	"github.com/deepteams/webp"
 
 	"github.com/swampPr/mina-img/internal/utils"
 )
@@ -30,6 +24,8 @@ const (
 )
 
 type HandlerFunc = func(o *Opts) error
+
+var errBadOutPath = errors.New("bad destination path. outpath format: /path/to/out.format")
 
 var HandlersRegistry = map[Operation]HandlerFunc{
 	"Encode":  handleEncoding,
@@ -65,7 +61,7 @@ func handleEncoding(o *Opts) error {
 		_ = newFile.Close()
 	}()
 
-	return Encode(newFile, sourceImg)
+	return encode(newFile, sourceImg)
 }
 
 func handleConvertion(o *Opts) error {
@@ -80,6 +76,9 @@ func handleConvertion(o *Opts) error {
 	}
 
 	_, format, _ := strings.CutLast(o.OutPath, ".")
+	if len(format) < 1 {
+		return errBadOutPath
+	}
 
 	newFile, err := os.Create(o.OutPath)
 	if err != nil {
@@ -90,33 +89,5 @@ func handleConvertion(o *Opts) error {
 		_ = newFile.Close()
 	}()
 
-	switch format {
-	case "png":
-		err = png.Encode(newFile, sourceImg)
-		if err != nil {
-			return err
-		}
-	case "jpeg":
-		err = jpeg.Encode(newFile, sourceImg, nil)
-		if err != nil {
-			return err
-		}
-	case "bmp":
-		err = bmp.Encode(newFile, sourceImg)
-		if err != nil {
-			return err
-		}
-	case "webp":
-		err = webp.Encode(newFile, sourceImg, nil)
-		if err != nil {
-			return err
-		}
-	case "jpg":
-		err = jpeg.Encode(newFile, sourceImg, nil)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
+	return convert(newFile, sourceImg, format)
 }

@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Grayscale function  ->  takes image and turns it grayscale
 func Grayscale(i image.Image) *image.Gray {
 	bounds := i.Bounds()
 	dst := image.NewGray(bounds)
@@ -13,7 +14,7 @@ func Grayscale(i image.Image) *image.Gray {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			r, g, b, _ := i.At(x, y).RGBA()
 
-			r8, g8, b8 := byte(r>>8), byte(g>>8), byte(b>>8)
+			r8, g8, b8 := byte(r>>8), byte(g>>8), byte(b>>8) //#nosec
 
 			gray := 0.299*float64(r8) + 0.587*float64(g8) + 0.114*float64(b8)
 

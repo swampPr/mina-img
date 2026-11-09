@@ -6,11 +6,12 @@ import (
 	"image"
 	"io"
 	"math"
+	"strings"
 
 	"github.com/swampPr/mina-img/internal/utils"
 )
 
-func Encode(w io.Writer, i image.Image) error {
+func encode(w io.Writer, i image.Image) error {
 	grayscaled := utils.Grayscale(i)
 
 	img := createImage(grayscaled)
@@ -39,7 +40,7 @@ func createImage(i image.Image) *MinaImg {
 	mapLength := ((width + 1) / 2) * height
 	pixMap := make([]byte, 0, mapLength)
 
-	metadata := fmt.Sprintf("MIN-V1.1\n%d\n%d\r\n\r\n", width, height)
+	metadata := fmt.Sprintf("MINA-V1.1\n%d\n%d\r\n\r\n", width, height)
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x += 2 {
@@ -63,6 +64,7 @@ func createImage(i image.Image) *MinaImg {
 	return &MinaImg{
 		PixMap:   pixMap,
 		PixSize:  mapLength,
+		Version:  strings.Split(metadata, "\n")[0],
 		Metadata: metadata,
 		Width:    width,
 		Height:   height,

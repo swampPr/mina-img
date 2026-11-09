@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -16,15 +17,15 @@ var convertCmd = &cobra.Command{
 	RunE:    execConvert,
 }
 
-func execConvert(cmd *cobra.Command, args []string) error {
+func execConvert(_ *cobra.Command, args []string) error {
 	if len(args) < 2 {
 		return errors.New("you must provide a source path and an out path")
 	}
 
 	opts := &mina.Opts{
 		Op:      mina.ConvertOp,
-		InPath:  args[0],
-		OutPath: args[1],
+		InPath:  strings.TrimSpace(args[0]),
+		OutPath: strings.TrimSpace(args[1]),
 	}
 
 	return mina.Handle(opts)
@@ -32,14 +33,4 @@ func execConvert(cmd *cobra.Command, args []string) error {
 
 func init() {
 	rootCmd.AddCommand(convertCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// convertCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// convertCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
